@@ -1,11 +1,13 @@
 # core deps
-# pip install -e . --extra-index-url https://download.pytorch.org/whl/cu118 
+# conda create -n coqui-tts python=3.10
+# conda activate coqui-tts
+# conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
 numpy==1.22.0;python_version<="3.10"
 numpy>=1.24.3;python_version>"3.10"
 cython>=0.29.30
 scipy>=1.11.2
-torch==2.2.1+cu118
-torchaudio==2.2.1+cu118
+torch
+torchaudio
 soundfile>=0.12.0
 librosa>=0.10.0
 scikit-learn>=1.3.0
