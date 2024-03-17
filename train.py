@@ -15,13 +15,13 @@ from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 
 # we use the same path as this script as our training folder.
-output_path = "../output"
+output_path = "../output/ljspeech"
 
 # DEFINE DATASET CONFIG
 # Set LJSpeech as our target dataset and define its path.
 # You can also use a simple Dict to define the dataset and pass it to your custom formatter.
 dataset_config = BaseDatasetConfig(
-    formatter="ljspeech", meta_file_train="metadata.csv", path=os.path.join(output_path, "../recipes/LJSpeech-1.1/")
+    formatter="ljspeech", meta_file_train="metadata.csv", path=("../recipes/LJSpeech/LJSpeech-1.1")
 )
 
 # INITIALIZE THE TRAINING CONFIGURATION
