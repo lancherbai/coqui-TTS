@@ -4,29 +4,31 @@ import os
 # TrainingArgs: Defines the set of arguments of the Trainer.
 from trainer import Trainer, TrainerArgs
 
-# GlowTTSConfig: all model related values for training, validating and testing.
-from TTS.tts.configs.glow_tts_config import GlowTTSConfig
+# # GlowTTSConfig: all model related values for training, validating and testing.
+# from TTS.tts.configs.glow_tts_config import GlowTTSConfig
 
 # BaseDatasetConfig: defines name, formatter and path of the dataset.
 from TTS.tts.configs.shared_configs import BaseDatasetConfig
+from TTS.tts.configs.tacotron2_config import Tacotron2Config
 from TTS.tts.datasets import load_tts_samples
-from TTS.tts.models.glow_tts import GlowTTS
+# from TTS.tts.models.glow_tts import GlowTTS
+from TTS.tts.models.tacotron2 import Tacotron2
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 
 # we use the same path as this script as our training folder.
-output_path = "../output/ljspeech"
+output_path = "../output/thchs30"
 
 # DEFINE DATASET CONFIG
 # Set LJSpeech as our target dataset and define its path.
 # You can also use a simple Dict to define the dataset and pass it to your custom formatter.
 dataset_config = BaseDatasetConfig(
-    formatter="ljspeech", meta_file_train="metadata.csv", path=("../recipes/LJSpeech/LJSpeech-1.1")
+    formatter="thchs30", meta_file_train="", path=("../recipes/THCHS-30/data_thchs30/train")
 )
 
 # INITIALIZE THE TRAINING CONFIGURATION
 # Configure the model. Every config class inherits the BaseTTSConfig.
-config = GlowTTSConfig(
+config = Tacotron2Config(
     batch_size=32,
     eval_batch_size=16,
     num_loader_workers=4,
@@ -36,7 +38,7 @@ config = GlowTTSConfig(
     epochs=1000,
     text_cleaner="phoneme_cleaners",
     use_phonemes=True,
-    phoneme_language="en-us",
+    phoneme_language="zh-cn",
     phoneme_cache_path=os.path.join(output_path, "phoneme_cache"),
     print_step=25,
     print_eval=False,
@@ -71,7 +73,7 @@ train_samples, eval_samples = load_tts_samples(
 # Models take a config object and a speaker manager as input
 # Config defines the details of the model like the number of layers, the size of the embedding, etc.
 # Speaker manager is used by multi-speaker models.
-model = GlowTTS(config, ap, tokenizer, speaker_manager=None)
+model = Tacotron2(config, ap, tokenizer, speaker_manager=None)
 
 # INITIALIZE THE TRAINER
 # Trainer provides a generic API to train all the 🐸TTS models with all its perks like mixed-precision training,
